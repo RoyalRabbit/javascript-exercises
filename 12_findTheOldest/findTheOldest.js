@@ -1,14 +1,15 @@
 const findTheOldest = function(array) {
-    array.forEach(obj=>{
-        if (!obj.yearOfDeath) obj.yearOfDeath = new Date().getFullYear()
-    })
-    const oldest = array.reduce((accumulator, current)=>{
-        const currentAge = current.yearOfDeath - current.yearOfBirth;
-        const oldestAge = accumulator.yearOfDeath - accumulator.yearOfBirth;
-        return currentAge > oldestAge ? current : accumulator;
+    const oldest = array.reduce((oldest, current)=>{
+        const oldAge = findAge(oldest.yearOfBirth, oldest.yearOfDeath);
+        const currentAge = findAge(current.yearOfBirth, current.yearOfDeath);
+        return oldAge > currentAge ? oldest : current;
     })
     return oldest;
 };
 
+function findAge(birthyear, deathyear) {
+    if (!deathyear) deathyear = new Date().getFullYear();
+    return deathyear - birthyear;
+};
 // Do not edit below this line
 module.exports = findTheOldest;
